@@ -1,0 +1,20 @@
+.sidebar {
+    width: 25%;
+    height: 100rem;
+    background-color: var(--white-color);
+}
+
+.sidebar__nav {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.sidebar__nav-link {
+    display: inline-block;
+    font-size: 1.6rem;
+    text-decoration: none;
+}
