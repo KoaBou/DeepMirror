@@ -2,6 +2,8 @@
     --white-color: #fff;
     --black-color: #000;
     --text-color: #333;
+    --primary-color: #fd8ba8;
+    --active-color: #c76bc5;
 }
 
 * {
@@ -27,4 +29,11 @@ html {
 .grid__row {
     display: flex;
     flex-wrap: wrap;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
 }
