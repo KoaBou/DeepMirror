@@ -29,6 +29,21 @@
     border-radius: 10px;
 }
 
+.header__logo-link {
+    display: inline-flex;
+    border-radius: 10px;
+    height: 90%;
+    width: 40%;
+
+    justify-content: center;
+    align-items: center;
+
+    color: var(--text-color);
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
 .header__nav {
     display: flex;
     align-self: center;
