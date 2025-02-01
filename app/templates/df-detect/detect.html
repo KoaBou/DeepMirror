@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="static/js/camera.js"></script>
+
+<div class="content">
+    <div class="user__camera" style="position: relative;">
+        <video id="cameraFeed" style="width: 100%; height: auto; display: block;" autoplay></video>
+        <img id="placeholderImage" 
+            src="./static/images/camera-off-icon.png" 
+            alt="Placeholder" 
+            style="position: absolute; top: 35%; left: 40%; width: 20%; height: 20%; display: block;"
+        >
+    </div>
+
+    <div class="control__panel">
+        <button class="control__panel-button" onclick="DeepFake_Detect()">DeepFake Detection</button>
+
+        <div class="control__panel-status">
+            <div class="status-header">Status</div>
+            <div class="status-infor">Deepfake detection turned off</div>
+        </div>
+
+        <div class="control__panel-params">Parameters</div>
+        <button class="control__panel-button" onclick="toggleCamera()">Toggle Camera</button>
+        <button class="control__panel-button" onclick="uploadVideo()">Upload Video</button>
+    </div>
+    
+</div>
+{% endblock content %}
