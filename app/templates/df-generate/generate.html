@@ -8,16 +8,13 @@
     <div class="user__camera" style="position: relative;">
         <video id="cameraFeed" style="width: 100%; height: auto; display: block;" autoplay></video>
         <img id="placeholderImage" 
-            src="./static/images/camera-off-icon.png" 
-            alt="Placeholder" 
-            style="position: absolute; top: 35%; left: 35%; width: 20%; height: 20%; display: block;"
-        >
+         src="./static/images/camera-off-icon.png" 
+         alt="Placeholder">
     </div>
 
     <div class="control__panel">
-        <!-- id="statusDisplay" -->
-        <div class="control__panel-status" >Deepfake Detection: off</div>
-        <div class="control__panel-status" >Status</div>
+        <div class="control__panel-button" >Deepfake Generation</div>
+        <div class="control__panel-status"></div>
         <button class="control__panel-button" onclick="toggleCamera()">For realtime gen</button>
         <div class="control__panel-params"></div>
     </div>
