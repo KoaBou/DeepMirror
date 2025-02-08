@@ -1,0 +1,175 @@
+.control__panel {
+    display: flex;
+    gap: 10px;
+    width: 80%;
+    color: var(--text-color);
+    justify-content: center;
+    font-size: 1.7rem; 
+    font-weight: bold;
+    text-align: center;
+    align-items: start;
+}
+
+.control__panel-left, .control__panel-right{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%; 
+}
+
+.control__panel-detect {
+    display: flex;
+    align-items: center;
+    grid-column: span 1;
+    height: 40px; /* Set a fixed height */
+    min-height:  40px; /* Prevent shrinking */
+    max-height:  40px; /* Prevent growing */
+    width: 100%;
+    color: var(--white-color);
+    background-color: var(--text-color);
+    border-radius: 13px;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.icon{
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.eye_icon_on{
+    width: 26px;
+    height:17.72px;
+}
+
+.eye_icon_off{
+    width: 26px;
+    height:21.01px;
+}
+
+/* Active state - Fix color issue */
+.control__panel-detect.active {
+    background: var(--active-color) !important;
+    color: var(--white-color) !important; /* FIXED TYPO */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover Effect - Ensure it does not interfere with active state */
+.control__panel-detect:hover {
+    background: var(--active-color) !important;
+    color: var(--white-color) !important;
+    transform: scale(0.95);
+}
+
+.control__panel-info {
+    align-items: center;
+    grid-column: span 1;
+    height: 40px; /* Set a fixed height */
+    min-height:  40px; /* Prevent shrinking */
+    max-height:  40px; /* Prevent growing */
+    width: 100%;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border-radius: 13px;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.collapsible-content {
+    max-height: 0px;
+    overflow: hidden;
+    background-color: var(--light-color);
+    padding: 0px;
+    border-radius: 13px;
+    margin-top: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.collapsible-content.open {
+    max-height: 600px; /* Adjust height based on content */
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure Button Group Behaves Like a Full-Width Grid Item */
+.button-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40px; /* Set a fixed height */
+    min-height:  40px; /* Prevent shrinking */
+    max-height:  40px; /* Prevent growing */    
+    width: 100%; /* Take full grid width */
+    grid-column: span 1; /* Ensure it takes up full row in grid */
+    border-radius: 13px;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: -5px;
+}
+
+.button-group button {
+    flex: 1; /* Ensures equal width inside .button-group */
+    font-size: 1.7rem;
+    padding: 8px 24px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+    min-width: 100px; /* Prevents buttons from becoming too small */
+    max-width: 200px; /* Prevents excessive stretching */
+}
+
+/* Toggle Camera Button */
+.toggle-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 13px;
+}
+
+/* Upload Video Button */
+.upload-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 13px; 
+}
+
+/* Hover Effects */
+.toggle-btn:hover, .toggle-btn.active, .upload-btn:hover, .upload-btn.active {
+    background: var(--active-color) !important;
+    color: var(--white-color);
+    width: auto;
+    height: auto;
+    transform: scale(0.95);
+}
+
+/* Video Grid Layout */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensures 2 per row */
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Video Styling */
+.video-grid video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 13px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Hide File Input */
+#videoUpload {
+    display: none;
+}
