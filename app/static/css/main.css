@@ -19,15 +19,18 @@
 
 .header__logo {
     display: flex;
-    height: 50%;
-    width: 5%;
-
     justify-content: center;
     align-items: center;
-
-    background-color: var(--primary-color);
+    height: 50%;
+    width: 5%;
     border-radius: 10px;
+    background-image: url("../static/images/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: scale(0.1)
 }
+
 
 .header__logo-link {
     display: inline-flex;
@@ -47,7 +50,7 @@
 .header__nav {
     display: flex;
     align-self: center;
-    height: 50%;
+    height: 60%;
     width: 30%;
     background-color: var(--primary-color);
     border-radius: 10px;
@@ -67,12 +70,14 @@
     color: var(--text-color);
     font-size: 1.6rem;
     text-decoration: none;
+    font-weight: bold;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.header__nav-link:hover {
-    background-color: var(--active-color);
+.header__nav-link:hover{
+    background-image: var(--active-color) !important;
     color: var(--white-color);
+    transform: scale(0.95)
 }
 
 /* Add */
@@ -173,58 +178,30 @@
 }
 
 .user__camera {
+    position: relative;
     display: flex;
     height: 70%;
     width: 80%;
-    background-color: var(--primary-color);
-    border-radius: 10px;
-}
-
-.control__panel {
-    display: flex;
-    height: 20%;
-    width: 80%;
-    flex-wrap: wrap;
-
-    justify-content: center;
-    gap: 10% 2%;
-}
-
-.control__panel-button {
-    height: 45%;
-    width: 45%;
-    background-color: var(--primary-color);
-    border-radius: 10px;
-}
-
-.control__panel-status {
-    display: flex;
-    height: 45%;
-    width: 45%;
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    justify-content: center;
-    align-items: center;
-}
-
-.status-header {
-    color: white; /* White text */
-    font-size: 25px; /* Medium text size */
-    padding-bottom: 10px;
-}
-
-.status-infor {
-    color: white; /* White text */
-    font-size: 16px; /* Medium text size */
-}
-
-.control__panel-params {
-    display: flex;
-    height: 50%;
-    width: 80%;
-    background-color: var(--primary-color);
+    background-color: var(--light-color);
     border-radius: 10px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    flex-shrink: 0;
+}
+
+.user__camera video {
+    width: 100%;
+    height: 100%;
+    display: none; /* Hide video until camera turns on */
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+#placeholderImage {
+    position: absolute;
+    width: 45; /* Adjust size */
+    height: 45;
+    transform: scale(0.2);
+    display: block;
 }

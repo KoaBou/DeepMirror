@@ -1,9 +1,10 @@
 :root {
-    --white-color: #fff;
+    --white-color: #FBF2FF;
     --black-color: #000;
-    --text-color: #333;
-    --primary-color: #fd8ba8;
-    --active-color: #c76bc5;
+    --text-color: #6D366C;
+    --primary-color: #F1B1C1;
+    --light-color: #ECDEE6;
+    --active-color: linear-gradient(90deg, #741B72 0%, #C76BC5 100%);
 }
 
 * {
@@ -13,7 +14,7 @@
 html {
     font-size: 62.5%;
     line-height: 1.;
-    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Quicksand', sans-serif;
     box-sizing: border-box;
 }
 
