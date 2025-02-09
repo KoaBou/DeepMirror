@@ -3,6 +3,7 @@
 {% block content %}
 <script src="{{ url_for('static', filename='js/camera.js') }}"></script>
 <script src="{{ url_for('static', filename='js/detect.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/detect.css') }}">
 
 <div class="content">
     <div class="user__camera">
@@ -33,24 +34,24 @@
             <div class="collapsible-section">
                 <button class="control__panel-info" onclick="toggleCollapse('statusInfo')">Status</button>
                 <div class="collapsible-content" id="statusInfo">
-                    <p>Current system status: Running</p>
+                    <p>DeepFake Detection Turned Off</p>
                 </div>
             </div>
 
             
-
             <div class="button-group">
                 <button class="toggle-btn" onclick="toggleCamera()">Toggle Camera</button>
-                <button class="upload-btn" onclick="toggleCollapse('videoContainer')">Upload Video</button>
-                <input type="file" id="videoUpload" accept="video/*" multiple>
+                <button class="upload-btn" id="uploadDetectVideoBtn">Upload Video</button>
+                <input type="file" id="detectVideoUpload" accept="video/*" multiple hidden>
             </div>
             
             <!-- New Collapsible Video Section -->
-            <div class="collapsible-content" id="videoContainer">
-                <div class="video-grid" id="videoGrid">
+            <div class="collapsible-content" id="detectVideoContainer">
+                <div class="video-grid" id="detectVideoGrid">
                     <!-- Videos will be dynamically added here -->
                 </div>
             </div>
+            
         </div>
 
     </div>

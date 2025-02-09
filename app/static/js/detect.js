@@ -1,20 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Selecting buttons and elements only after the DOM is ready
+    console.log("Detect.js loaded");
+
+    // Selecting elements
     const detectButton = document.querySelector(".control__panel-detect");
-    const toggleCameraButton = document.querySelector(".toggle-btn");
-    const uploadBtn = document.querySelector(".upload-btn");
-    const fileInput = document.getElementById("videoUpload");
-    const videoGrid = document.getElementById("videoGrid");
-    const videoContainer = document.getElementById("videoContainer");
-    const buttonGroup = document.getElementById("buttonGroup");
+    const uploadDetectVideoBtn = document.getElementById("uploadDetectVideoBtn");
+    const detectFileInput = document.getElementById("detectVideoUpload");
+    const detectVideoGrid = document.getElementById("detectVideoGrid");
+    const detectVideoContainer = document.getElementById("detectVideoContainer");
 
-    // Ensure all elements exist before adding event listeners
-    if (toggleCameraButton) {
-        toggleCameraButton.addEventListener("click", function () {
-            this.classList.toggle("active");
-        });
-    }
+    let selectedDetectVideo = null; // Store selected video
 
+    // Handle Deepfake Detection Toggle
     if (detectButton) {
         detectButton.addEventListener("click", function () {
             this.classList.toggle("active");
@@ -23,43 +19,23 @@ document.addEventListener("DOMContentLoaded", function () {
             const eyeIconOn = this.getAttribute("data-icon-on");
             const eyeIconOff = this.getAttribute("data-icon-off");
         
-            // Check button state and apply correct image + class
-            if (this.classList.contains("active")) {
-                this.innerHTML = `<img src="${eyeIconOn}" class="icon eye_icon_on"> Deepfake Detection: On`;
-            } else {
-                this.innerHTML = `<img src="${eyeIconOff}" class="icon eye_icon_off"> Deepfake Detection: Off`;
-            }
+            // Update button text and icon
+            this.innerHTML = this.classList.contains("active")
+                ? `<img src="${eyeIconOn}" class="icon eye_icon_on"> Deepfake Detection: On`
+                : `<img src="${eyeIconOff}" class="icon eye_icon_off"> Deepfake Detection: Off`;
         });
     }
 
-    if (uploadBtn && fileInput) {
-        uploadBtn.addEventListener("click", function () {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener("change", function (event) {
-            const files = event.target.files;
-
-            if (files.length > 0) {
-                // Ensure the video section stays open
-                videoContainer.classList.add("open");
-            }
-
-            for (let file of files) {
-                const videoURL = URL.createObjectURL(file);
-                const videoElement = document.createElement("video");
-
-                videoElement.src = videoURL;
-                videoElement.controls = true;
-                videoElement.classList.add("uploaded-video");
-
-                videoGrid.appendChild(videoElement);
-            }
+    // Handle Video Uploads
+    if (uploadDetectVideoBtn && detectFileInput) {
+        uploadDetectVideoBtn.addEventListener("click", () => detectFileInput.click());
+        detectFileInput.addEventListener("change", function (event) {
+            handleVideoUpload(event, detectVideoGrid, detectVideoContainer, "detect");
         });
     }
 
-    // Function to toggle collapsible elements dynamically
-    window.toggleCollapse = function (id) {
+     // Function to toggle collapsible elements dynamically
+     window.toggleCollapse = function (id) {
         var content = document.getElementById(id);
         
         // If the container is the video container, ensure it stays open after upload
