@@ -1,0 +1,84 @@
+/* Video Grid Layout */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensures 2 per row */
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Video Styling */
+.video-grid video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 13px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Hide File Input */
+#videoUpload {
+    display: none;
+}
+
+/* Video styling inside collapsible */
+.uploaded-video {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+/* Hover effect for videos */
+.uploaded-video:hover {
+    transform: scale(1.05);
+}
+
+/* Highlight selected video */
+.uploaded-video.selected {
+    border: 4px solid var(--active-color);
+}
+
+/* Hide the default radio button */
+.video-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Custom radio button style */
+.video-radio + label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid var(--text-color); /* Default border color */
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+    position: relative; /* Needed for the pseudo-element */
+}
+
+/* When selected, change the border and fill color */
+.video-radio:checked + label {
+    background-color: var(--active-color);
+    border-color: var(--active-color);
+}
+
+/* Add an inner dot to indicate selection */
+.video-radio:checked + label::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+

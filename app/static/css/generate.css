@@ -1,0 +1,94 @@
+.control__panel {
+    display: flex;
+    gap: 10px;
+    width: 80%;
+    color: var(--text-color);
+    justify-content: center;
+    font-size: 1.7rem; 
+    font-weight: bold;
+    text-align: center;
+    align-items: start;
+}
+
+.control__panel-left, .control__panel-right{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%; 
+}
+
+.control__panel-generate {
+    display: flex;
+    align-items: center;
+    grid-column: span 1;
+    height: 40px; /* Set a fixed height */
+    min-height:  40px; /* Prevent shrinking */
+    max-height:  40px; /* Prevent growing */
+    width: 100%;
+    color: var(--white-color);
+    background-color: var(--text-color);
+    border-radius: 13px;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.control__panel-upload{
+    align-items: center;
+    grid-column: span 1;
+    height: 40px; /* Set a fixed height */
+    min-height:  40px; /* Prevent shrinking */
+    max-height:  40px; /* Prevent growing */
+    width: 100%;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border-radius: 13px;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.control__panel-generate:hover, .control__panel-upload:hover{
+    background: var(--active-color) !important;
+    color: var(--white-color) !important;
+    transform: scale(0.95);
+}
+
+.control__panel-info {
+    align-items: center;
+    grid-column: span 1;
+    height: 40px; /* Set a fixed height */
+    min-height:  40px; /* Prevent shrinking */
+    max-height:  40px; /* Prevent growing */
+    width: 100%;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border-radius: 13px;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.collapsible-content {
+    max-height: 0px;
+    overflow: hidden;
+    background-color: var(--light-color);
+    padding: 0px;
+    border-radius: 13px;
+    margin-top: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.collapsible-content.open {
+    max-height: 600px; 
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
