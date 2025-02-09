@@ -18,7 +18,7 @@
 }
 
 /* Hide File Input */
-#videoUpload {
+#sourceVideoUpload,  #destinationVideoUpload, #detectVideoUpload{
     display: none;
 }
 
