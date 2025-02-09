@@ -80,6 +80,91 @@
     transform: scale(0.95)
 }
 
+/* Add */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner{
+    width: 100%;
+    height: 40vh; /* Show 40% of the image height */
+    object-fit: cover; /* Ensures the image is cropped */
+}
+
+/* Button Styles */
+.btn-primary {
+    padding: 10px 24px;
+    border: 2px solid #fd8ba8;
+    color: #fd8ba8;
+    background: transparent;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: #fd8ba8;
+    border: 2px solid #c76bc5;
+    color: white;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .overlay h1 {
+        font-size: 2.5rem;
+    }
+}
+
+#services, #features {
+    padding: 100px 0 75px;
+  }
+  .media.service-box {
+    margin: 25px 0 36px;
+    padding: 20px;
+    padding-left: 86px;
+    position: relative;
+    background: #FFFFFF;
+    border-radius: 0 0 20px 0;
+    border: #fd8ba8 2px solid;
+  }
+  .media.service-box .pull-left {
+    margin-right: 20px;
+  }
+  .media.service-box .pull-left > i {
+    font-size: 35px;
+    /* height: 94px; */
+    line-height: 53px;
+    text-align: center;
+    width: 79px; 
+    color: #c76bc5;
+    /* background:#fff; */
+    /* box-shadow: inset 0 0 0 1px #d7d7d7; */
+    /* -webkit-box-shadow: inset 0 0 0 1px #d7d7d7; */
+    transition: background-color 400ms, background-color 400ms;
+    position: absolute;
+    padding: 14px;
+    /* height: 100%; */
+    left: -13px;
+    top: -15px;
+    vertical-align: middle;
+    background: #fd8ba8;
+    border-radius: 10% 20%;
+    height: 80px;
+    border: 6px #fff solid;
+  }
+  .features .media.service-box .pull-left > i{
+  color: #FFE3D2;
+  font-size: 30px;
+  padding-top: 10px;
+  }
+  .media.service-box:hover .pull-left > i {  
+  }
+
+/* end add */
+
 .content {
     display: flex;
     height: 70%;
