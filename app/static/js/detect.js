@@ -79,7 +79,6 @@ function captureImage() {
   return canvas.toDataURL("image/png");
 }
 
-
 function sendImageToServer() {
   const imageData = captureImage();
   fetch("/predict", {
@@ -90,7 +89,7 @@ function sendImageToServer() {
     body: JSON.stringify({
       image: imageData,
       params: {
-        # TODO: Add parameters for the detection model
+        // TODO: Add parameters for the detection model
         threshold: 0.5,
       },
     }),
