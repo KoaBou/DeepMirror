@@ -20,6 +20,7 @@
 
 /* Hide File Input */
 #detectVideoUpload {
+#sourceVideoUpload,  #destinationVideoUpload, #detectVideoUpload{
     display: none;
 }
 
