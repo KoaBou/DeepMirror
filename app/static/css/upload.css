@@ -1,7 +1,8 @@
 /* Video Grid Layout */
 .video-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensures 2 per row */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Ensures 2 per row */
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -18,6 +19,7 @@
 }
 
 /* Hide File Input */
+#detectVideoUpload {
 #sourceVideoUpload,  #destinationVideoUpload, #detectVideoUpload{
     display: none;
 }
@@ -50,26 +52,28 @@
 }
 
 /* Custom radio button style */
-.video-radio + label {
+.video-radio+label {
     display: inline-block;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 3px solid var(--text-color); /* Default border color */
+    border: 3px solid var(--text-color);
+    /* Default border color */
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
-    position: relative; /* Needed for the pseudo-element */
+    position: relative;
+    /* Needed for the pseudo-element */
 }
 
 /* When selected, change the border and fill color */
-.video-radio:checked + label {
+.video-radio:checked+label {
     background-color: var(--active-color);
     border-color: var(--active-color);
 }
 
 /* Add an inner dot to indicate selection */
-.video-radio:checked + label::after {
+.video-radio:checked+label::after {
     content: "";
     display: block;
     width: 10px;
@@ -81,4 +85,3 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
