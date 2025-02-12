@@ -19,8 +19,9 @@
 }
 
 /* Hide File Input */
+#sourceVideoUpload,
+#destinationVideoUpload,
 #detectVideoUpload {
-#sourceVideoUpload,  #destinationVideoUpload, #detectVideoUpload{
     display: none;
 }
 
