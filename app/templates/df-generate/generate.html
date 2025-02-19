@@ -40,13 +40,8 @@
     
             <!-- Upload Destination Button & Collapsible -->
             <div class="upload-section">
-                <button class="control__panel-upload" id="uploadDestinationBtn">Upload Destination</button>
-                <input type="file" id="destinationVideoUpload" accept="video/*" multiple hidden>
-                <div class="collapsible-content" id="destinationVideoContainer">
-                    <div class="video-grid" id="destinationVideoGrid">
-                        <!-- Videos will be dynamically added here -->
-                    </div>
-                </div>
+                <button class="control__panel-upload" id="uploadSourceBtn" onclick="toggleCamera()" >Toggle Camera</button>
+                
             </div>
         </div>
     </div>
