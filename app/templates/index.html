@@ -1,110 +1,167 @@
 {% extends "base.html" %}
-
 {% block content %}
-<body class="bg-white text-gray-800">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
-<section class="relative">
-    <img src="../static/images/banner.png" alt="Deepfake" class="banner"/>
-    <div class="overlay">
-        <div class="text-center text-white">
-            <h1 class="text-6xl font-bold text-[#fd8ba8]" ><b>DEEPMIRROR</b></h1>
-            <p class="mt-4">
-                A localhost webapp<br/><b>Deepfake detection and generation
+<body>
+    <section class="banner">
+        <div class="banner-content">
+            <h1 class="banner-title">DeepMirror</h1>
+            <p class="banner-subtitle">
+                Uncover digital forgeries or craft hyper-realistic AI-generated videos—<br/>
+                all in one powerful, ethical, and user-friendly platform
             </p>
-            <button class="btn-primary mt-6">Start Now</button>
         </div>
-    </div>
-</section>
-
- <section id="services" >
-    <div class="container">
-
-        <div class="section-header">
-            <h2 class="section-title wow fadeInDown">About Us</h2>
-            <p class="wow fadeInDown">We are group 1<br>Group member:</p>
-        </div>
-
-        <div class="row">
-            <div class="features">
-                <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="0ms">
-                    <div class="media service-box">
-                        <div class="pull-left">
-                            <i class="fa fa-futbol-o"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nguyen Vinh Nghi</h4>
-                            <p>Nickname: Winter24</p>
-                        </div>
-                    </div>
-                </div><!--/.col-md-4-->
-
-                <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
-                    <div class="media service-box">
-                        <div class="pull-left">
-                            <i class="fa fa-compass"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nguyen Vinh Nghi</h4>
-                            <p>Nguyen Vinh Nghi</p>
-                        </div>
-                    </div>
-                </div><!--/.col-md-4-->
-
-                <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="200ms">
-                    <div class="media service-box">
-                        <div class="pull-left">
-                            <i class="fa fa-database"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nguyen Vinh Nghi</h4>
-                            <p>Nguyen Vinh Nghi</p>
-                        </div>
-                    </div>
-                </div><!--/.col-md-4-->
-            
-                <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
-                    <div class="media service-box">
-                        <div class="pull-left">
-                            <i class="fa fa-bar-chart"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nguyen Vinh Nghi</h4>
-                            <p>Nguyen Vinh Nghi</p>
-                        </div>
-                    </div>
-                </div><!--/.col-md-4-->
-
-                <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms">
-                    <div class="media service-box">
-                        <div class="pull-left">
-                            <i class="fa fa-paper-plane-o"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nguyen Vinh Nghi</h4>
-                            <p>Nguyen Vinh Nghi</p>
-                        </div>
-                    </div>
-                </div><!--/.col-md-4-->
-
-                <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="500ms">
-                    <div class="media service-box">
-                        <div class="pull-left">
-                            <i class="fa fa-bullseye"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Nguyen Vinh Nghi</h4>
-                            <p>Nguyen Vinh Nghi</p>
-                        </div>
-                    </div>
-                </div><!--/.col-md-4-->
+    </section>
+    
+    <section class="demo-panel">
+        <div class="demo-panel-container">
+            <!-- Left Image Box -->
+            <div class="demo-panel-item">
+                <img src="/static/images/detection.jpg" alt="Deepfake Detection Demo Image" class="demo-panel-image">
+                <p class="demo-panel-image-rectangle-text">Deepfake Detection Demo Image</p>
             </div>
-        </div><!--/.row-->    
-    </div><!--/.container-->
-</section><!--/#services-->
+    
+            <!-- Right Image Box -->
+            <div class="demo-panel-item">
+                <img src="/static/images/generation.jpg" alt="Deepfake Generation Demo Image" class="demo-panel-image">
+                <p class="demo-panel-image-rectangle-text">Deepfake Generation Demo Image</p>
+            </div>
+        </div>
+    </section>
 
+    <section class="card-grid">
+        <!-- Heading Section -->
+        <div class="card-grid-heading">
+            <h2>Deepfake Detection - Expose the Fake</h2>
+            <p>Worried about manipulated media? Our AI-powered detection system analyzes images and videos with precision, identifying even the most sophisticated deepfakes. Get a confidence score, detailed analysis, and forensic insights in seconds.</p>
+        </div>
+    
+        <!-- Cards Container -->
+        <div class="card-list">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="https://www.figma.com/design/CowprY5T4X57PIwoTiNHtV/DeepMirror?node-id=105-3195&t=lfoGQJ2bi3yFbq4s-4" alt="AI-driven Authenticity Checks">
+                </div>
+                <p class="card-text">AI-driven Authenticity Checks</p>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="/static/icons/upload.svg" alt="Import & Analyze Videos">
+                </div>
+                <p class="card-text">Import & Analyze Videos</p>
+            </div>
+    
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="/static/icons/table.svg" alt="Detailed Parameter Reports">
+                </div>
+                <p class="card-text">Detailed Parameter Reports</p>
+            </div>
+    
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="/static/icons/flash.svg" alt="Optional Real-time Detection">
+                </div>
+                <p class="card-text">Optional Real-time Detection (hypothetical)</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="card-grid">
+        <!-- Heading Section -->
+        <div class="card-grid-heading">
+            <h2>Deepfake Generation – Redefine Creativity</h2>
+            <p>DeepMirror offers state-of-the-art deepfake generation tools that empower users to create hyper-realistic AI-generated content with ease. Whether for entertainment, research, or experimental AI applications, our system ensures high-quality results while adhering to ethical AI standards.</p>
+        </div>
+    
+        <!-- Cards Container -->
+        <div class="card-list">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="https://www.figma.com/design/CowprY5T4X57PIwoTiNHtV/DeepMirror?node-id=105-3195&t=lfoGQJ2bi3yFbq4s-4" alt="AI-driven Authenticity Checks">
+                </div>
+                <p class="card-text">Ethical AI Safeguards</p>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="/static/icons/upload.svg" alt="Upload & Generate Video">
+                </div>
+                <p class="card-text">Upload & Generate Video</p>
+            </div>
+    
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="/static/icons/table.svg" alt="Detailed Parameter Reports">
+                </div>
+                <p class="card-text">Detailed Parameter Reports</p>
+            </div>
+    
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="/static/icons/flash.svg" alt="Optional Real-time Generation">
+                </div>
+                <p class="card-text">Optional Real-time Generation</p>
+            </div>
+        </div>
+    </section>
+    
+    <secion class="card-grid">
+        <!-- Heading Section -->
+        <div class="card-grid-heading">
+            <h2>About Us</h2>
+            <p>We are a group of FPT University students passionate about AI and digital forensics. DeepMirror is our project to develop an AI-powered deepfake detection and generation platform, combining innovation with ethical responsibility. Our mission is to make deepfake technology accessible, secure, and transparent for everyone.</p>
+            <h3>Gang Members</h3>
+        </div>
+        <div class="team-container">
+            <div class="team-card">
+                <img src="profile1.jpg" alt="Team Member" class="team-img">
+                <h3 class="team-name">Name</h3>
+                <p class="team-role">Role</p>
+                <p class="team-bio">Short description</p>
+            </div>
+
+            <div class="team-card">
+                <img src="profile1.jpg" alt="Team Member" class="team-img">
+                <h3 class="team-name">Name</h3>
+                <p class="team-role">Role</p>
+                <p class="team-bio">Short description</p>
+            </div>
+
+            <div class="team-card">
+                <img src="profile1.jpg" alt="Team Member" class="team-img">
+                <h3 class="team-name">Name</h3>
+                <p class="team-role">Role</p>
+                <p class="team-bio">Short description</p>
+            </div>
+
+            <div class="team-card">
+                <img src="profile1.jpg" alt="Team Member" class="team-img">
+                <h3 class="team-name">Name</h3>
+                <p class="team-role">Role</p>
+                <p class="team-bio">Short description</p>
+            </div>
+
+            <div class="team-card">
+                <img src="profile1.jpg" alt="Team Member" class="team-img">
+                <h3 class="team-name">Name</h3>
+                <p class="team-role">Role</p>
+                <p class="team-bio">Short description</p>
+            </div>
+        </div>
+        
+    </secion>
 
 </body>
 </html>
 
 {% endblock content %}
-

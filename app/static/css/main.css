@@ -8,34 +8,35 @@
 
 .header {
     display: flex;
-    /* justify-content: center; */
     align-items: center;
-    flex-direction: row-reverse;
-    gap: 30%;
+    justify-content: center; /* Centers the navigation */
+    position: relative; /* Ensures absolute positioning for children */
     padding: 1rem 2rem;
     height: 10%;
+    min-height: 10%;
     width: 100%;
 }
 
 .header__logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    width: 5%;
-    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px; /* Adjust size */
+    height: 80px; /* Adjust size */
     background-image: url("../static/images/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    transform: scale(0.1)
+    transform: scale(1);
+    margin: 5px;
 }
+
 
 
 .header__logo-link {
     display: inline-flex;
     border-radius: 10px;
-    height: 90%;
+    height: 40%;
     width: 40%;
 
     justify-content: center;
@@ -49,18 +50,21 @@
 
 .header__nav {
     display: flex;
-    align-self: center;
-    height: 60%;
+    min-height: 50%;
+    height: 50%;
     width: 30%;
     background-color: var(--primary-color);
     border-radius: 10px;
     justify-content: space-around;
     align-items: center;
+    position: relative; /* Keeps it in normal flow */
 }
 
 .header__nav-link {
     display: inline-flex;
     border-radius: 10px;
+    min-height: 50%;
+
     height: 90%;
     width: 40%;
 
