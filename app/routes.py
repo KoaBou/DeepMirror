@@ -11,10 +11,10 @@ import onnxruntime as ort
 import torch
 
 # Check GPU availability at startup
-print("CUDA available:", torch.cuda.is_available())
-if torch.cuda.is_available():
-    print("GPU Name:", torch.cuda.get_device_name(0))
-print("ONNX Runtime providers:", ort.get_available_providers())
+# print("CUDA available:", torch.cuda.is_available())
+# if torch.cuda.is_available():
+#     print("GPU Name:", torch.cuda.get_device_name(0))
+# print("ONNX Runtime providers:", ort.get_available_providers())
 
 # Initialize DeepfakeDetector
 detect_model = DeepfakeDetector()
@@ -22,7 +22,7 @@ detect_model = DeepfakeDetector()
 # Load InsightFace Face Detector with GPU enforcement
 face_detector = FaceAnalysis(name='buffalo_l')
 face_detector.prepare(ctx_id=0, det_size=(640, 640))  # ctx_id=0 for GPU
-print("Face detector running on:", "GPU" if 'CUDAExecutionProvider' in ort.get_available_providers() else "CPU")
+# print("Face detector running on:", "GPU" if 'CUDAExecutionProvider' in ort.get_available_providers() else "CPU")
 
 # Load Face Swapper with explicit GPU provider
 session_options = ort.SessionOptions()
@@ -34,7 +34,7 @@ face_swapper = insightface.model_zoo.get_model(
     session_options=session_options,
     providers=providers
 )
-print("Face swapper running on:", providers[0])
+# print("Face swapper running on:", providers[0])
 
 def base64_to_image(base64_string):
     """Convert Base64 string to OpenCV image"""
