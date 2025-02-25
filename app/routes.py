@@ -9,15 +9,21 @@ import cv2
 import numpy as np
 import onnxruntime as ort
 import torch
+import mediapipe as mp
+from app.config import CHECKPOINT_PATH
+
 
 # Check GPU availability at startup
 # print("CUDA available:", torch.cuda.is_available())
 # if torch.cuda.is_available():
 #     print("GPU Name:", torch.cuda.get_device_name(0))
 # print("ONNX Runtime providers:", ort.get_available_providers())
+# Initialize MediaPipe Face Detection.
+mp_face_detection = mp.solutions.face_detection
+mp_drawing = mp.solutions.drawing_utils
 
 # Initialize DeepfakeDetector
-detect_model = DeepfakeDetector()
+detect_model = DeepfakeDetector(checkpoint_path=CHECKPOINT_PATH)
 
 # Load InsightFace Face Detector with GPU enforcement
 face_detector = FaceAnalysis(name='buffalo_l')
@@ -27,6 +33,7 @@ face_detector.prepare(ctx_id=0, det_size=(640, 640))  # ctx_id=0 for GPU
 # Load Face Swapper with explicit GPU provider
 session_options = ort.SessionOptions()
 providers = ['CUDAExecutionProvider', 'CPUExecutionProvider'] if 'CUDAExecutionProvider' in ort.get_available_providers() else ['CPUExecutionProvider']
+
 face_swapper = insightface.model_zoo.get_model(
     'inswapper_128.onnx',
     download=False,
@@ -70,12 +77,11 @@ def predict():
     data = request.get_json()
     image = data['image']
     params = data['params']
-
+    # Saves to 'camera.png'
     convertImage(image)
-    print(image[:100])
-    # results = detect_model.predict('camera.png')
-    results = np.random.rand(1).tolist()[0]
-    
+    img = cv2.imread('camera.png')
+    deepfake_prob = detect_model.predict('camera.png')
+    results = 'real' if deepfake_prob <0 else 'fake'
     return json.dumps({'results': results})
 
 @app.route('/generate_deepfake', methods=['POST'])

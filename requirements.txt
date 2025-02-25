@@ -1,1 +1,8 @@
 flask
+insightface
+mediapipe
+opencv-python
+numpy
+onnxruntime
+torch
+torchvision
