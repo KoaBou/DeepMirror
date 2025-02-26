@@ -22,8 +22,8 @@ from app.config import CHECKPOINT_PATH
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
-# Initialize DeepfakeDetector
-detect_model = DeepfakeDetector(checkpoint_path=CHECKPOINT_PATH)
+# Initialize DeepfakeDetector with model type SmallCNN or ShallowNN
+detect_model = DeepfakeDetector(checkpoint_path=CHECKPOINT_PATH, model_type = "SmallCNN")
 
 # Load InsightFace Face Detector with GPU enforcement
 face_detector = FaceAnalysis(name='buffalo_l')
