@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 import onnxruntime as ort
 import torch
+
 import time
 
 # Check GPU availability at startup
@@ -22,7 +23,9 @@ detect_model = DeepfakeDetector()
 
 # Load InsightFace Face Detector with GPU enforcement
 face_detector = FaceAnalysis(name='buffalo_l')
+
 face_detector.prepare(ctx_id=0, det_size=(64, 64))  # ctx_id=0 for GPU
+
 # print("Face detector running on:", "GPU" if 'CUDAExecutionProvider' in ort.get_available_providers() else "CPU")
 
 # Load Face Swapper with explicit GPU provider
@@ -117,6 +120,7 @@ def generate_deepfake():
         fps = 1 / processing_time if processing_time > 0 else 0
 
         return jsonify({'deepfake_image': result_base64, 'fps': fps})
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

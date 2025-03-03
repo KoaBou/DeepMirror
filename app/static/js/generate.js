@@ -6,9 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const sourceImageGrid = document.getElementById("sourceImageGrid");
     const sourceImageContainer = document.getElementById("sourceImageContainer");
     const generateBtn = document.querySelector(".control__panel-generate");
+
     const deepfakeImage = document.getElementById("deepfakeImage");
     const cameraFeed = document.getElementById("cameraFeed");
     const fpsDisplay = document.getElementById("fpsDisplay"); // Element to display FPS
+
     let selectedSourceInput = null;
     let isGenerating = false; // Flag to control the loop
 
@@ -67,12 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 const data = await response.json();
                 if (data.deepfake_image) {
                     console.log("Deepfake generated successfully.");
+
                     cameraFeed.style.display = "none"; // Hide webcam feed
                     deepfakeImage.src = data.deepfake_image;
                     deepfakeImage.style.display = "block"; // Show deepfake image
 
                     // Update FPS display
                     fpsDisplay.textContent = `FPS: ${data.fps.toFixed(2)}`; // Display FPS with 2 decimal places
+
                 } else {
                     alert("Deepfake generation failed: " + data.error);
                 }
@@ -90,10 +94,12 @@ document.addEventListener("DOMContentLoaded", function () {
             generateDeepfakeLoop();
             generateBtn.textContent = "Stop Generating";
         } else {
+
             // Stop generating: hide the deepfake and show the webcam feed
             generateBtn.textContent = "Generate Deepfake";
             cameraFeed.style.display = "block"; // Show webcam feed again
             deepfakeImage.style.display = "none"; // Hide deepfake image
+
         }
     });
 
