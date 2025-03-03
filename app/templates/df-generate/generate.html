@@ -7,12 +7,18 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/generate.css') }}">
 
 <div class="content">
-    <div class="user__camera" style="position: relative;">
-        <video id="cameraFeed" style="width: 100%; height: auto; display: block;" autoplay></video>
-        <img id="placeholderImage" 
-         src="./static/images/camera-off-icon.png" 
-         alt="Placeholder">
+    <!-- <div class="user__camera">
+        <video id="cameraFeed" autoplay></video>
+        <img id="placeholderImage" src="{{ url_for('static', filename='images/camera-off-icon.png') }}" alt="Camera Off">
+    </div> -->
+
+    <div class="user__camera">
+        <img id="deepfakeImage" src="" alt="Deepfake Image" style="display:none; position:absolute; width:100%; height:100%; object-fit:cover; border-radius: 15px;">
+        <video id="cameraFeed" autoplay></video>
+        <img id="placeholderImage" src="{{ url_for('static', filename='images/camera-off-icon.png') }}" alt="Camera Off">
     </div>
+
+    <div id="fpsDisplay" style="font-size: 56px; color: #000000; position: absolute; top: 10px; left: 10px; z-index: 1000;"></div>
 
     <div class="control__panel">
         <div class="control__panel-left">
@@ -29,9 +35,9 @@
             <!-- Upload Source Button & Collapsible -->
             <div class="upload-section">
                 <button class="control__panel-upload" id="uploadSourceBtn">Upload Source</button>
-                <input type="file" id="sourceVideoUpload" accept="video/*" multiple hidden>
-                <div class="collapsible-content" id="sourceVideoContainer">
-                    <div class="video-grid" id="sourceVideoGrid">
+                <input type="file" id="sourceImageUpload" accept="image/*" multiple hidden>
+                <div class="collapsible-content" id="sourceImageContainer">
+                    <div class="image-grid" id="sourceImageGrid">
                         <!-- Videos will be dynamically added here -->
 
                     </div>
@@ -40,13 +46,8 @@
     
             <!-- Upload Destination Button & Collapsible -->
             <div class="upload-section">
-                <button class="control__panel-upload" id="uploadDestinationBtn">Upload Destination</button>
-                <input type="file" id="destinationVideoUpload" accept="video/*" multiple hidden>
-                <div class="collapsible-content" id="destinationVideoContainer">
-                    <div class="video-grid" id="destinationVideoGrid">
-                        <!-- Videos will be dynamically added here -->
-                    </div>
-                </div>
+                <button class="control__panel-upload" id="uploadSourceBtn" onclick="toggleCamera()" >Toggle Camera</button>
+                
             </div>
         </div>
     </div>

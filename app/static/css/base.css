@@ -14,7 +14,7 @@
 html {
     font-size: 62.5%;
     line-height: 1.;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif !important;
     box-sizing: border-box;
 }
 
