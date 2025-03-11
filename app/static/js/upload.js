@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         selectedDetectVideo = videoURL;
                     }
                 }
-                highlightSelected(videoGrid);
+                highlightSelected(videoGrid, "video");
             });
 
             // Append video and custom radio button
@@ -52,20 +52,71 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to highlight the selected video
-    function highlightSelected(videoGrid) {
-        videoGrid.querySelectorAll(".video-wrapper").forEach(wrapper => {
-            const radio = wrapper.querySelector(".video-radio");
-            const video = wrapper.querySelector("video");
+    // Function to handle image uploads and selection
+    function handleImageUpload(event, imageGrid, imageContainer, type) {
+        const files = event.target.files;
+
+        if (files.length > 0) {
+            imageContainer.classList.add("open"); // Expand collapsible if images are uploaded
+        }
+
+        for (let file of files) {
+            const imageURL = URL.createObjectURL(file);
+            const imageWrapper = document.createElement("div");
+            imageWrapper.classList.add("image-wrapper");
+
+            const imageElement = document.createElement("img");
+            imageElement.src = imageURL;
+            imageElement.classList.add("uploaded-image");
+
+            // Create a radio button for selection
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = type + "-image"; // Ensure only one per collapsible
+            radio.classList.add("image-radio");
+            radio.id = `image-${type}-${Math.random().toString(36).substr(2, 9)}`;
+
+            // Create a label for the custom radio button
+            const label = document.createElement("label");
+            label.setAttribute("for", radio.id);
+
+            // When selecting a new image, update the chosen image
+            radio.addEventListener("change", function () {
+                if (radio.checked) {
+                    if (type === "source") {
+                        selectedSourceImage = imageURL;
+                    } else if (type === "destination") {
+                        selectedDestinationImage = imageURL;
+                    } else if (type === "detect") {
+                        selectedDetectImage = imageURL;
+                    }
+                }
+                highlightSelected(imageGrid, "image");
+            });
+
+            // Append image and custom radio button
+            imageWrapper.appendChild(radio);
+            imageWrapper.appendChild(label); // Custom styled radio button
+            imageWrapper.appendChild(imageElement);
+            imageGrid.appendChild(imageWrapper);
+        }
+    }
+
+    // Function to highlight the selected video or image
+    function highlightSelected(grid, type) {
+        grid.querySelectorAll(`.${type}-wrapper`).forEach(wrapper => {
+            const radio = wrapper.querySelector(`.${type}-radio`);
+            const media = wrapper.querySelector(type === "video" ? "video" : "img");
 
             if (radio.checked) {
-                video.style.border = "4px solid var(--active-color)";
+                media.style.border = "4px solid var(--active-color)";
             } else {
-                video.style.border = "none";
+                media.style.border = "none";
             }
         });
     }
 
-    // Expose function globally
+    // Expose functions globally
     window.handleVideoUpload = handleVideoUpload;
+    window.handleImageUpload = handleImageUpload;
 });
