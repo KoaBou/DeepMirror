@@ -11,21 +11,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const cameraFeed = document.getElementById("cameraFeed");
     const fpsDisplay = document.getElementById("fpsDisplay"); // Element to display FPS
 
-    let selectedSourceInput = null;
+    window.selectedSourceInput = null;
     let isGenerating = false; // Flag to control the loop
 
     if (uploadSourceBtn && sourceFileInput) {
         uploadSourceBtn.addEventListener("click", () => sourceFileInput.click());
 
         sourceFileInput.addEventListener("change", function (event) {
-            handleImageUpload(event, sourceImageGrid, sourceImageContainer, "Gen");
+            handleImageUpload(event, sourceImageGrid, sourceImageContainer, "source");
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    selectedSourceInput = e.target.result;
-                    console.log("Source image uploaded.");
-                };
+                    console.log("Image uploaded. Select an image before generating.");
+                    // Do NOT set window.selectedSourceInput here. Wait for user selection.
+                };                
                 reader.readAsDataURL(file);
             }
         });
@@ -46,15 +46,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function generateDeepfakeLoop() {
         while (isGenerating) {
-            if (!selectedSourceInput) {
-                alert("Please upload a source image first.");
+            if (!window.selectedSourceInput) {
+                console.warn("Please select a source image.");
                 isGenerating = false;
                 return;
             }
-
+            console.log("Using source image:", window.selectedSourceInput);     
+            
+            
+    
             const targetImage = captureWebcamFrame(cameraFeed);
             if (!targetImage) {
-                alert("Could not capture webcam frame.");
+                console.warn("Could not capture webcam frame.");
                 isGenerating = false;
                 return;
             }
@@ -63,30 +66,45 @@ document.addEventListener("DOMContentLoaded", function () {
                 const response = await fetch("/generate_deepfake", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ source: selectedSourceInput, target: targetImage }),
+                    body: JSON.stringify({ source: window.selectedSourceInput, target: targetImage }),
                 });
-
+    
                 const data = await response.json();
+    
                 if (data.deepfake_image) {
                     console.log("Deepfake generated successfully.");
-
-                    cameraFeed.style.display = "none"; // Hide webcam feed
+    
+                    // Swap to deepfake image
                     deepfakeImage.src = data.deepfake_image;
-                    deepfakeImage.style.display = "block"; // Show deepfake image
-
+                    deepfakeImage.style.display = "block";
+                    cameraFeed.style.display = "none"; // Hide webcam only when deepfake is active
+    
                     // Update FPS display
-                    fpsDisplay.textContent = `FPS: ${data.fps.toFixed(2)}`; // Display FPS with 2 decimal places
-
+                    fpsDisplay.textContent = `FPS: ${data.fps.toFixed(2)}`;
                 } else {
-                    alert("Deepfake generation failed: " + data.error);
+                    console.log("No face detected. Keeping the camera feed active.");
+    
+                    // Ensure the camera remains visible and functional
+                    cameraFeed.style.display = "block";
+                    deepfakeImage.style.display = "none"; // Hide deepfake image if no generation happened
                 }
             } catch (error) {
                 console.error("Error generating deepfake:", error);
+    
+                // Ensure the camera remains visible even if there's an error
+                cameraFeed.style.display = "block";
+                deepfakeImage.style.display = "none"; 
             }
-            
+    
             await new Promise(resolve => setTimeout(resolve, 0)); // Wait 1 second before next frame
+
+            if (!isGenerating) {
+                cameraFeed.style.display = "block";
+                deepfakeImage.style.display = "none";
+            }
         }
     }
+    
 
     generateBtn.addEventListener("click", function () {
         isGenerating = !isGenerating; // Toggle generating state

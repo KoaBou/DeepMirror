@@ -81,18 +81,27 @@ document.addEventListener("DOMContentLoaded", function () {
             label.setAttribute("for", radio.id);
 
             // When selecting a new image, update the chosen image
-            radio.addEventListener("change", function () {
+            radio.addEventListener("change", async function () {
                 if (radio.checked) {
                     if (type === "source") {
-                        selectedSourceImage = imageURL;
-                    } else if (type === "destination") {
-                        selectedDestinationImage = imageURL;
+                        window.selectedSourceInput = await convertImageToBase64(imageElement.src);
+                        console.log("Selected source image updated:", window.selectedSourceInput);
                     } else if (type === "detect") {
                         selectedDetectImage = imageURL;
                     }
                 }
                 highlightSelected(imageGrid, "image");
             });
+
+            async function convertImageToBase64(imageSrc) {
+                const response = await fetch(imageSrc);
+                const blob = await response.blob();
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+            }
 
             // Append image and custom radio button
             imageWrapper.appendChild(radio);

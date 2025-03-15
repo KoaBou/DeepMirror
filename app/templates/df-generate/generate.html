@@ -26,7 +26,7 @@
             <div class="collapsible-section">
                 <button class="control__panel-info" onclick="toggleCollapse('parametersInfo')">Parameters</button>
                 <div class="collapsible-content" id="parametersInfo">
-                    <p>Threshold: 80%<br>Detection Mode: Real-time</p>
+                    <p>Waiting for data...</p>
                 </div>
             </div>
         </div>
@@ -37,9 +37,10 @@
                 <button class="control__panel-upload" id="uploadSourceBtn">Upload Source</button>
                 <input type="file" id="sourceImageUpload" accept="image/*" multiple hidden>
                 <div class="collapsible-content" id="sourceImageContainer">
-                    <div class="image-grid" id="sourceImageGrid">
-                        <!-- Videos will be dynamically added here -->
-
+                    <div class="video-grid-wrapper">
+                        <div class="video-grid" id="sourceImageGrid">
+                            <!-- Videos will be dynamically added here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,9 +52,6 @@
             </div>
         </div>
     </div>
-    
-    
-        
     
 </div>
 {% endblock content %}

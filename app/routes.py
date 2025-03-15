@@ -13,10 +13,10 @@ import torch
 import time
 
 # Check GPU availability at startup
-# print("CUDA available:", torch.cuda.is_available())
-# if torch.cuda.is_available():
-#     print("GPU Name:", torch.cuda.get_device_name(0))
-# print("ONNX Runtime providers:", ort.get_available_providers())
+print("CUDA available:", torch.cuda.is_available())
+if torch.cuda.is_available():
+    print("GPU Name:", torch.cuda.get_device_name(0))
+print("ONNX Runtime providers:", ort.get_available_providers())
 
 # Initialize DeepfakeDetector
 detect_model = DeepfakeDetector()
@@ -106,9 +106,13 @@ def generate_deepfake():
         target_img = base64_to_image(data['target'])
         target_faces = face_detector.get(target_img)
 
-        # Check that faces were detected in both images
-        if not cached_source_faces or len(cached_source_faces) == 0 or len(target_faces) == 0:
-            return jsonify({'error': 'No face detected in either the source or target image'}), 400
+        # Check that faces were detected in the source image
+        if not cached_source_faces or len(cached_source_faces) == 0:
+            return jsonify({'error': 'No face detected in the source image'}), 400
+
+        # Ignores the error 
+        if len(target_faces) == 0:
+            return jsonify({'deepfake_image': None, 'fps': 0})
 
         # Perform face swap using the first detected face in both images
         result_img = face_swapper.get(target_img, target_faces[0], cached_source_faces[0], paste_back=True)
