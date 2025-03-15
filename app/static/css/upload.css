@@ -1,14 +1,34 @@
 /* Video Grid Layout */
 .video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    /* Ensures 2 per row */
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
     align-items: center;
     width: 100%;
     padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
 }
+
+    /* Custom Scrollbar */
+.video-grid::-webkit-scrollbar {
+        width: 8px;
+    }
+
+.video-grid::-webkit-scrollbar-track {
+        background: var(--white-color);
+        border-radius: 10px;
+    }
+
+.video-grid::-webkit-scrollbar-thumb {
+        background: var(--text-color);
+        border-radius: 10px;
+    }
+
+.video-grid::-webkit-scrollbar-thumb:hover {
+        background: var(--active-color);
+    }
 
 /* Video Styling */
 .video-grid video {
@@ -86,3 +106,4 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+

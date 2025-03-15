@@ -37,9 +37,10 @@
                 <button class="control__panel-upload" id="uploadSourceBtn">Upload Source</button>
                 <input type="file" id="sourceImageUpload" accept="image/*" multiple hidden>
                 <div class="collapsible-content" id="sourceImageContainer">
-                    <div class="image-grid" id="sourceImageGrid">
-                        <!-- Videos will be dynamically added here -->
-
+                    <div class="video-grid-wrapper">
+                        <div class="video-grid" id="sourceImageGrid">
+                            <!-- Videos will be dynamically added here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,9 +52,6 @@
             </div>
         </div>
     </div>
-    
-    
-        
     
 </div>
 {% endblock content %}

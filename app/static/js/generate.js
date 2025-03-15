@@ -11,21 +11,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const cameraFeed = document.getElementById("cameraFeed");
     const fpsDisplay = document.getElementById("fpsDisplay"); // Element to display FPS
 
-    let selectedSourceInput = null;
+    window.selectedSourceInput = null;
     let isGenerating = false; // Flag to control the loop
 
     if (uploadSourceBtn && sourceFileInput) {
         uploadSourceBtn.addEventListener("click", () => sourceFileInput.click());
 
         sourceFileInput.addEventListener("change", function (event) {
-            handleImageUpload(event, sourceImageGrid, sourceImageContainer, "Gen");
+            handleImageUpload(event, sourceImageGrid, sourceImageContainer, "source");
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    selectedSourceInput = e.target.result;
-                    console.log("Source image uploaded.");
-                };
+                    console.log("Image uploaded. Select an image before generating.");
+                    // Do NOT set window.selectedSourceInput here. Wait for user selection.
+                };                
                 reader.readAsDataURL(file);
             }
         });
@@ -46,11 +46,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function generateDeepfakeLoop() {
         while (isGenerating) {
-            if (!selectedSourceInput) {
-                console.warn("Please upload a source image first.");
+            if (!window.selectedSourceInput) {
+                console.warn("Please select a source image.");
                 isGenerating = false;
                 return;
             }
+            console.log("Using source image:", window.selectedSourceInput);     
+            
+            
     
             const targetImage = captureWebcamFrame(cameraFeed);
             if (!targetImage) {
@@ -58,12 +61,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 isGenerating = false;
                 return;
             }
-    
+
             try {
                 const response = await fetch("/generate_deepfake", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ source: selectedSourceInput, target: targetImage }),
+                    body: JSON.stringify({ source: window.selectedSourceInput, target: targetImage }),
                 });
     
                 const data = await response.json();
