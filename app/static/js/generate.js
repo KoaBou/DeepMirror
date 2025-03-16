@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deepfakeImage = document.getElementById("deepfakeImage");
     const cameraFeed = document.getElementById("cameraFeed");
     const fpsDisplay = document.getElementById("fpsDisplay"); // Element to display FPS
+    const parametersInfo = document.getElementById("parametersInfo"); // Element to display distance
 
     window.selectedSourceInput = null;
     let isGenerating = false; // Flag to control the loop
@@ -53,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             console.log("Using source image:", window.selectedSourceInput);     
             
-            
-    
             const targetImage = captureWebcamFrame(cameraFeed);
             if (!targetImage) {
                 console.warn("Could not capture webcam frame.");
@@ -81,12 +80,18 @@ document.addEventListener("DOMContentLoaded", function () {
     
                     // Update FPS display
                     fpsDisplay.textContent = `FPS: ${data.fps.toFixed(2)}`;
+                    
+                    // Update distance value in Parameters Info
+                    parametersInfo.innerHTML = `Distance: ${data.distance.toFixed(4)}`; // Display distance with 4 decimal points
                 } else {
                     console.log("No face detected. Keeping the camera feed active.");
     
                     // Ensure the camera remains visible and functional
                     cameraFeed.style.display = "block";
                     deepfakeImage.style.display = "none"; // Hide deepfake image if no generation happened
+                    
+                    // Update Parameters Info to show waiting message
+                    parametersInfo.innerHTML = "Waiting for data...";
                 }
             } catch (error) {
                 console.error("Error generating deepfake:", error);
@@ -94,6 +99,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Ensure the camera remains visible even if there's an error
                 cameraFeed.style.display = "block";
                 deepfakeImage.style.display = "none"; 
+
+                // Update Parameters Info to show error message
+                parametersInfo.innerHTML = "Error generating deepfake.";
             }
     
             await new Promise(resolve => setTimeout(resolve, 0)); // Wait 1 second before next frame
@@ -101,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!isGenerating) {
                 cameraFeed.style.display = "block";
                 deepfakeImage.style.display = "none";
+                parametersInfo.innerHTML = "Waiting for data..."; // Reset to waiting when stopped
             }
         }
     }
@@ -118,6 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
             cameraFeed.style.display = "block"; // Show webcam feed again
             deepfakeImage.style.display = "none"; // Hide deepfake image
 
+            // Reset Parameters Info to waiting
+            parametersInfo.innerHTML = "Waiting for data...";
         }
     });
 
