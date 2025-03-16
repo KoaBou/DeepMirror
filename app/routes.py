@@ -116,26 +116,37 @@ def generate_deepfake():
 
         # Calculate embeddings for source and target faces
         source_embedding = cached_source_faces[0].embedding
-        target_embedding = target_faces[0].embedding
-        distance = np.linalg.norm(source_embedding - target_embedding)
 
         # Perform face swap using the first detected face in both images
         result_img = face_swapper.get(target_img, target_faces[0], cached_source_faces[0], paste_back=True)
+
+        # Convert the resulting deepfake image to Base64
         result_base64 = image_to_base64(result_img)
 
+        # Extract face embeddings from the generated deepfake image
+        result_faces = face_detector.get(result_img)
+        if len(result_faces) > 0:
+            result_face_embedding = result_faces[0].embedding
+            distance = np.linalg.norm(source_embedding - result_face_embedding)
+        else:
+            distance = None
+            result_face_embedding = None
+
+        # Calculate FPS
         end_time = time.time()
         processing_time = end_time - start_time  # Time in seconds
         fps = 1 / processing_time if processing_time > 0 else 0
 
-        # Return embeddings along with the deepfake image
+        # Return the deepfake image, FPS, distance, and the result face embedding
         return jsonify({
             'deepfake_image': result_base64,
             'fps': fps,
-            'distance': distance.tolist()
+            'distance': distance.tolist(),
         })
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 
 if __name__ == '__main__':
