@@ -101,7 +101,7 @@ def generate_deepfake():
             cached_source = data['source']
             source_img = base64_to_image(cached_source)
             cached_source_faces = face_detector.get(source_img)
-        
+
         # Process the target image as usual
         target_img = base64_to_image(data['target'])
         target_faces = face_detector.get(target_img)
@@ -110,9 +110,14 @@ def generate_deepfake():
         if not cached_source_faces or len(cached_source_faces) == 0:
             return jsonify({'error': 'No face detected in the source image'}), 400
 
-        # Ignores the error 
+        # Ignores the error
         if len(target_faces) == 0:
             return jsonify({'deepfake_image': None, 'fps': 0})
+
+        # Calculate embeddings for source and target faces
+        source_embedding = cached_source_faces[0].embedding
+        target_embedding = target_faces[0].embedding
+        distance = np.linalg.norm(source_embedding - target_embedding)
 
         # Perform face swap using the first detected face in both images
         result_img = face_swapper.get(target_img, target_faces[0], cached_source_faces[0], paste_back=True)
@@ -120,13 +125,18 @@ def generate_deepfake():
 
         end_time = time.time()
         processing_time = end_time - start_time  # Time in seconds
-        print(processing_time)
         fps = 1 / processing_time if processing_time > 0 else 0
 
-        return jsonify({'deepfake_image': result_base64, 'fps': fps})
+        # Return embeddings along with the deepfake image
+        return jsonify({
+            'deepfake_image': result_base64,
+            'fps': fps,
+            'distance': distance.tolist()
+        })
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
