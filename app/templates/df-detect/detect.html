@@ -8,7 +8,6 @@
 <div class="content">
     <div class="user__camera">
         <video id="cameraFeed" autoplay></video>
-        <img id="placeholderImage" src="{{ url_for('static', filename='images/camera-off-icon.png') }}" alt="Camera Off">
     </div>
 
     <div class="control__panel">
@@ -23,7 +22,7 @@
             <div class="collapsible-section">
                 <button class="control__panel-info" onclick="toggleCollapse('parametersInfo')">Parameters</button>
                 <div class="collapsible-content" id="parametersInfo">
-                    <p>Threshold: 80%<br>Detection Mode: Real-time</p>
+                    <p>Waiting for data...</p>
                 </div>
             </div>
 

@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     console.log("Image uploaded. Select an image before generating.");
-                    // Do NOT set window.selectedSourceInput here. Wait for user selection.
                 };                
                 reader.readAsDataURL(file);
             }
