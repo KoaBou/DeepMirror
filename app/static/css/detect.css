@@ -90,6 +90,7 @@
     border-radius: 13px;
     margin-top: 5px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
 }
 .collapsible-content.open {
     max-height: 600px; /* Adjust height based on content */

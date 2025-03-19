@@ -194,20 +194,6 @@
     flex-shrink: 0;
 }
 
-.user__camera {
-    position: relative; /* Ensures child elements can layer */
-    display: flex;
-    height: 70%;
-    width: 80%;
-    background-color: var(--light-color);
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-    overflow: hidden; /* Ensures nothing leaks outside */
-}
-
 .user__camera video {
     width: 100%;
     height: 100%;
@@ -227,12 +213,19 @@
     z-index: 2; /* Ensures it's on top of the video */
 }
 
-
-#placeholderImage {
+/* #placeholderImage {
     position: absolute;
+    width: 20%;
+    height: 20%;
+    object-fit: cover;
+    display: none; 
+} */
+
+#cameraFeed {
+    position: relative;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure image fits in the area */
-    display: none; /* Initially hidden */
+    display: block;
+    z-index: 1; /* Ensure it's above other elements */
+    overflow: hidden; /* Hide any overflow */
 }
-

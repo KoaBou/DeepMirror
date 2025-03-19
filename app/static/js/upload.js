@@ -35,8 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (radio.checked) {
                     if (type === "source") {
                         selectedSourceVideo = videoURL;
-                    } else if (type === "destination") {
-                        selectedDestinationVideo = videoURL;
                     } else if (type === "detect") {
                         selectedDetectVideo = videoURL;
                     }
