@@ -109,6 +109,17 @@ def convertImage(imgData):
 cached_source = None
 cached_source_faces = None
 
+def convert_arrays_to_lists(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {k: convert_arrays_to_lists(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_arrays_to_lists(item) for item in obj]
+    else:
+        return obj
+
+
 @app.route('/generate_deepfake', methods=['POST'])
 def generate_deepfake():
     global cached_source, cached_source_faces
@@ -191,16 +202,20 @@ def predict_deepfake():
         except Exception as e:
             return jsonify({"error": f"Error decoding image: {str(e)}"}), 400
 
-        frame, parameters = DeepfakeVideoTester.process_frame(frame)
+        frame, parameters = tester.process_frame(frame)
+        # Suppose parameters = {"some_data": np.array([...]), "some_dict": {...}}
+        converted_parameters = convert_arrays_to_lists(parameters)
+        frame_b64 = image_to_base64(frame)
+
 
         # Calculate FPS
         end_time = time.time()
         processing_time = end_time - start_time  # Time in seconds
         fps = 1 / processing_time if processing_time > 0 else 0
         return jsonify({
-            'frame': frame,
+            'annotated_frame': frame_b64,
             'fps': fps,
-            'parameters': parameters.tolist(),
+            'results': converted_parameters,
     })
     
     if source_type == "video":

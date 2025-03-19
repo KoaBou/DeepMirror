@@ -213,19 +213,19 @@
     z-index: 2; /* Ensures it's on top of the video */
 }
 
-#placeholderImage {
+/* #placeholderImage {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure image fits in the area */
-    display: none; /* Initially hidden */
-}
+    width: 20%;
+    height: 20%;
+    object-fit: cover;
+    display: none; 
+} */
 
 #cameraFeed {
     position: relative;
     width: 100%;
     height: 100%;
     display: block;
-    z-index: 10; /* Ensure it's above other elements */
+    z-index: 1; /* Ensure it's above other elements */
     overflow: hidden; /* Hide any overflow */
 }

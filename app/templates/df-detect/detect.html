@@ -7,7 +7,9 @@
 
 <div class="content">
     <div class="user__camera">
+        <img id="deepfakeImage" src="" alt="Deepfake Image" style="display:none; position:absolute; width:100%; height:100%; object-fit:cover; border-radius: 15px;">
         <video id="cameraFeed" autoplay></video>
+        <!-- <img id="placeholderImage" src="{{ url_for('static', filename='images/camera-off-icon.png') }}" alt="Camera Off"> -->
     </div>
 
     <div class="control__panel">
@@ -39,7 +41,7 @@
 
             
             <div class="button-group">
-                <button class="toggle-btn" onclick="toggleCamera()">Toggle Camera</button>
+                <button class="toggle-btn" onclick="toggleCamera()" id="cameraButton">Toggle Camera</button>
                 <button class="upload-btn" id="uploadDetectVideoBtn">Upload Video</button>
                 <input type="file" id="detectVideoUpload" accept="video/*" multiple hidden>
             </div>

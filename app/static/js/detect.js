@@ -2,49 +2,61 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Detect.js loaded");
 
     // Selecting elements
-    const detectButton = document.querySelector(".control__panel-detect");
-    const cameraButton = document.querySelector(".control__panel-camera");
-    const uploadDetectVideoBtn = document.getElementById("uploadDetectVideoBtn");
-    const detectFileInput = document.getElementById("detectVideoUpload");
-    const detectVideoGrid = document.getElementById("detectVideoGrid");
-    const detectVideoContainer = document.getElementById("detectVideoContainer");
-    const showVideoButton = document.getElementById("showVideoButton");
-    const statusInfo = document.getElementById("statusInfo");
+    const detectButton          = document.querySelector(".control__panel-detect");
+    const cameraButton          = document.querySelector(".toggle-btn");
+    const uploadDetectVideoBtn  = document.getElementById("uploadDetectVideoBtn");
+    const detectFileInput       = document.getElementById("detectVideoUpload");
+    const detectVideoGrid       = document.getElementById("detectVideoGrid");
+    const detectVideoContainer  = document.getElementById("detectVideoContainer");
+    const showVideoButton       = document.getElementById("showVideoButton");
+    const statusInfo            = document.getElementById("statusInfo");
+    const cameraFeed            = document.getElementById("cameraFeed");
 
-    const cameraFeed = document.getElementById("cameraFeed");
+    // OPTIONAL overlay if you want a <img> for annotated results
+    const deepfakeImage     = document.getElementById("deepfakeImage"); 
+
     let selectedDetectVideo = null; 
-    let isDetecting = false; 
-    let isCameraOn = false;
-    let cameraStream = null;
+    let isDetecting         = false; 
+    let isCameraOn          = false;
+    let cameraStream        = null;
 
+    const parametersInfo = document.getElementById("parametersInfo");
 
-    const parametersInfo = document.getElementById("parametersInfo"); // Element to display distance
-
+    // -------------------------------------------------------------------------
+    // DETECT BUTTON: toggles detection on/off, calls detect loop
+    // -------------------------------------------------------------------------
     if (detectButton) {
         detectButton.addEventListener("click", function () {
             this.classList.toggle("active");
-    
-            const eyeIconOn = this.getAttribute("data-icon-on");
+
+            const eyeIconOn  = this.getAttribute("data-icon-on");
             const eyeIconOff = this.getAttribute("data-icon-off");
-    
-            // Ensure button keeps working properly while updating UI
+
+            // Update button text/icon
             this.innerHTML = this.classList.contains("active")
                 ? `<img src="${eyeIconOn}" class="icon eye_icon_on"> Deepfake Detection: On`
                 : `<img src="${eyeIconOff}" class="icon eye_icon_off"> Deepfake Detection: Off`;
-    
+
             if (this.classList.contains("active")) {
                 console.log("Deepfake detection is ON");
                 isDetecting = true;
                 detectDeepfakeLoop();
+                updateDetectButtonUI(); 
             } else {
                 console.log("Deepfake detection is OFF");
                 isDetecting = false;
                 statusInfo.innerHTML = "DeepFake Detection Turned Off";
+
+                // If you have an overlay image, hide it here
+                deepfakeImage.style.display = "none";
+                updateDetectButtonUI(); 
             }
         });
     }
-    
 
+    // -------------------------------------------------------------------------
+    // SHOW VIDEO BUTTON: plays selected video (if any)
+    // -------------------------------------------------------------------------
     if (showVideoButton) {
         showVideoButton.addEventListener("click", function () {
             if (selectedDetectVideo) {
@@ -55,22 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    if (cameraButton) {
-        cameraButton.addEventListener("click", function () {
-            this.classList.toggle("active");
-
-            if (this.classList.contains("active")) {
-                console.log("Camera turned ON");
-                isCameraOn = true;
-                startCamera();
-            } else {
-                console.log("Camera turned OFF");
-                isCameraOn = false;
-                stopCamera();
-            }
-        });
-    }
-
+    // -------------------------------------------------------------------------
+    // FUNCTION: show uploaded/processed video in cameraFeed
+    // -------------------------------------------------------------------------
     function showVideoOnCameraFeed(videoPath) {
         // Set the source of the video directly to the cameraFeed element
         cameraFeed.src = `/static/processed_videos/${videoPath.split('/')[3]}`;
@@ -85,7 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    // Handle Video Uploads and Selection
+    // -------------------------------------------------------------------------
+    // VIDEO UPLOAD / SELECTION
+    // -------------------------------------------------------------------------
     if (uploadDetectVideoBtn && detectFileInput) {
         uploadDetectVideoBtn.addEventListener("click", () => detectFileInput.click());
 
@@ -98,30 +99,28 @@ document.addEventListener("DOMContentLoaded", function () {
         const files = event.target.files;
 
         if (files.length > 0) {
-            videoContainer.classList.add("open"); // Expand collapsible if videos are uploaded
+            videoContainer.classList.add("open");
         }
 
         for (let file of files) {
-            const videoURL = URL.createObjectURL(file);
-            const videoWrapper = document.createElement("div");
+            const videoURL    = URL.createObjectURL(file);
+            const videoWrapper= document.createElement("div");
             videoWrapper.classList.add("video-wrapper");
 
-            const videoElement = document.createElement("video");
-            videoElement.src = videoURL;
+            const videoElement= document.createElement("video");
+            videoElement.src   = videoURL;
             videoElement.controls = true;
             videoElement.classList.add("uploaded-video");
 
-            // Create a radio button for selection
-            const radio = document.createElement("input");
-            radio.type = "radio";
-            radio.name = type + "-video"; // Only one video can be selected
+            const radio       = document.createElement("input");
+            radio.type        = "radio";
+            radio.name        = type + "-video";
             radio.classList.add("video-radio");
-            radio.id = `video-${type}-${Math.random().toString(36).substr(2, 9)}`;
+            radio.id          = `video-${type}-${Math.random().toString(36).substr(2, 9)}`;
 
-            const label = document.createElement("label");
+            const label       = document.createElement("label");
             label.setAttribute("for", radio.id);
 
-            // When a user selects a video, update `selectedDetectVideo`
             radio.addEventListener("change", function () {
                 if (radio.checked) {
                     selectedDetectVideo = file;
@@ -135,46 +134,138 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // 🎥 Capture an image from the webcam
+    // -------------------------------------------------------------------------
+    // CAPTURE A FRAME FROM THE WEBCAM
+    // -------------------------------------------------------------------------
     function captureWebcamFrame(videoElement) {
         if (!videoElement || videoElement.readyState !== 4) {
-            console.error("Webcam feed is not available.");
+            console.error("Webcam feed is not available or not ready yet.");
             return null;
         }
         const canvas = document.createElement("canvas");
-        canvas.width = videoElement.videoWidth;
+        canvas.width  = videoElement.videoWidth;
         canvas.height = videoElement.videoHeight;
-        const ctx = canvas.getContext("2d");
+        const ctx     = canvas.getContext("2d");
         ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
         return canvas.toDataURL("image/jpeg");
     }
 
-    async function detectDeepfakeLoop() {
-        if (isCameraOn) {
-            // Real-time webcam detection loop
-            while (isDetecting) {
-                let imageData = captureWebcamFrame(cameraFeed);
-                let sourceType = "webcam";
+    // -------------------------------------------------------------------------
+    // START / STOP CAMERA
+    // -------------------------------------------------------------------------
+    async function startCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            cameraStream = stream;
+            cameraFeed.srcObject = stream;
+
+            cameraFeed.style.display       = "block";
+            cameraFeed.style.visibility    = "visible";
+
+            isCameraOn = true;
+            statusInfo.innerHTML = "Camera started successfully.";
+            console.log("Camera stream started, isCameraOn =", isCameraOn);
+        } catch (error) {
+            console.error("Error accessing the camera:", error);
+            statusInfo.innerHTML = "Error accessing the camera.";
+        }
+    }
+
+    function stopCamera() {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            cameraStream = null;
+        }
+        cameraFeed.srcObject = null;
+
+        cameraFeed.style.display    = "none";
+        cameraFeed.style.visibility = "hidden";
+
+        isCameraOn = false;
+        statusInfo.innerHTML = "Camera turned off.";
+        console.log("Camera stream stopped, isCameraOn =", isCameraOn);
+    }
+
+    function updateDetectButtonUI() {
+        const eyeIconOn  = detectButton.getAttribute("data-icon-on");
+        const eyeIconOff = detectButton.getAttribute("data-icon-off");
     
+        if (detectButton.classList.contains("active")) {
+            detectButton.innerHTML = `<img src="${eyeIconOn}" class="icon eye_icon_on"> Deepfake Detection: On`;
+        } else {
+            detectButton.innerHTML = `<img src="${eyeIconOff}" class="icon eye_icon_off"> Deepfake Detection: Off`;
+        }
+    }
+    
+
+    // -------------------------------------------------------------------------
+    // CAMERA BUTTON: toggles camera on/off 
+    // (If you want detection auto-start, add isDetecting=true here)
+    // -------------------------------------------------------------------------
+    cameraButton.addEventListener("click", async function () {
+        if (!isCameraOn) {
+            await startCamera();
+        } else {
+            stopCamera();
+    
+            // Stop detection if you want
+            isDetecting = false;
+            detectButton.classList.remove("active");
+    
+            // Force the detect button to show "Off" text/icons
+            const eyeIconOff = detectButton.getAttribute("data-icon-off");
+            detectButton.innerHTML = `<img src="${eyeIconOff}" class="icon eye_icon_off"> Deepfake Detection: Off`;
+        }
+    });
+    
+
+    // -------------------------------------------------------------------------
+    // MAIN DETECTION LOOP: Real-time if camera is on, single-pass if video
+    // -------------------------------------------------------------------------
+    async function detectDeepfakeLoop() {
+        console.log("detectDeepfakeLoop entered; isDetecting =", isDetecting);
+
+        // If camera is on, do a continuous loop:
+        if (isCameraOn) {
+            while (isDetecting) {
+                const imageData = captureWebcamFrame(cameraFeed);
+                selectedDetectVideo = null
+                if (!imageData) {
+                    // If not ready, wait a bit and retry
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    continue;
+                }
+
+                // statusInfo.innerHTML = "Detecting (webcam)...";
                 try {
-                    console.log("Sending webcam frame for deepfake detection...");
                     const response = await fetch("/predict_deepfake", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ image: imageData, source: sourceType }),
+                        body: JSON.stringify({ image: imageData, source: "webcam" }),
                     });
-    
                     const data = await response.json();
-    
+
+                    if (data.annotated_frame) {
+                        console.log(data.annotated_frame)
+                        // If you want to overlay annotated frame
+                        deepfakeImage.src = data.annotated_frame;
+                        deepfakeImage.style.display = "block";
+                    } else {
+                        // No annotated frame => hide overlay
+                        deepfakeImage.style.display = "none";
+                      }
+
                     if (data.results) {
                         console.log("Real-time deepfake detection successful.");
                         statusInfo.innerHTML = `Detecting in real-time`;
+                        // Show your info in parametersInfo
                         if (data.results.face_id !== undefined) {
                             parametersInfo.innerHTML = `
                             <div style="text-align: left;">
-                                <b>Label:</b> ${data.results.label} <br>
-                                <b>Confidence:</b> ${(data.results.confidence * 100).toFixed(2)}% <br>
-                                <b>Is Fake:</b> ${data.results.is_fake ? "Yes" : "No"} <br>
+                                <b>Fps:</b> ${data.fps}<br>
+                                <b>Label:</b> ${data.results.label}<br>
+                                <b>Confidence:</b> ${(data.results.confidence * 100).toFixed(2)}%<br>
+                                <b>Is Fake:</b> ${data.results.is_fake ? "Yes" : "No"}<br>
                                 <b>Probabilities:</b> ${data.results.probabilities.join(", ")}
                             </div>
                             `;
@@ -182,38 +273,46 @@ document.addEventListener("DOMContentLoaded", function () {
                     } else {
                         console.log("No deepfake detected.");
                         statusInfo.innerHTML = "No deepfake detected.";
+                        deepfakeImage.style.display = "none";
                     }
+
                 } catch (error) {
                     console.error("Error detecting deepfake:", error);
                     statusInfo.innerHTML = "Error detecting deepfake.";
+                    deepfakeImage.style.display = "none";
                 }
-    
-                // Add a delay to avoid spamming requests
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second per frame
+
+                // short delay so we don't spam the server too fast
+                await new Promise(resolve => setTimeout(resolve, 300));
             }
-        } 
+
+            console.log("Exiting camera real-time loop; isDetecting =", isDetecting);
+            // If you had an overlay image, you can hide it here
+            deepfakeImage.style.display = "none";
+        }
+        // Else if user selected a video, run the single-pass code:
         else if (selectedDetectVideo && isDetecting) {
             console.log("Processing selected video:", selectedDetectVideo.name);
-            statusInfo.innerHTML = "Processing selected video."
+            statusInfo.innerHTML = "Processing selected video.";
 
             const reader = new FileReader();
             reader.readAsDataURL(selectedDetectVideo);
             reader.onload = async function (event) {
                 let imageData = event.target.result;
-                let sourceType = "video";
-    
+                let sourceType= "video";
+
                 console.log("Sending video to server for deepfake detection...");
-                statusInfo.innerHTML = "Detecting..."
-    
+                statusInfo.innerHTML = "Detecting...";
+
                 try {
                     const response = await fetch("/predict_deepfake", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ image: imageData, source: sourceType }),
                     });
-    
+
                     const data = await response.json();
-    
+
                     if (data.results) {
                         console.log("Deepfake detection successful.");
                         statusInfo.innerHTML = `Detection Process Completed`;
@@ -232,30 +331,34 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </div>
                             `;
                         }
+                        // For example, if you want to show the processed video:
+                        // showVideoOnCameraFeed(data.results.output_path);
                         const lineBreak = document.createElement("br");
                         statusInfo.appendChild(lineBreak);
                         const showVideoButton = document.createElement("button");
                         showVideoButton.textContent = "\n---Play video---";
                         showVideoButton.addEventListener("click", () => showVideoOnCameraFeed(data.results.output_path));
                         statusInfo.appendChild(showVideoButton);
-                        
                     } else {
-                        console.log("No deepfake detected.");
+                        console.log("No deepfake detected or error in video processing.");
                         statusInfo.innerHTML = "No deepfake detected.";
                     }
                 } catch (error) {
                     console.error("Error processing video:", error);
                     statusInfo.innerHTML = "Error processing video.";
                 }
-    
-                // Stop detection after one video processing
+
                 isDetecting = false;
                 detectButton.classList.remove("active");
+                updateDetectButtonUI();
                 console.log("Deepfake detection stopped.");
             };
         }
     }
-    
+
+    // -------------------------------------------------------------------------
+    // END OF CODE
+    // -------------------------------------------------------------------------
 
     window.toggleCollapse = function (id) {
         var content = document.getElementById(id);
