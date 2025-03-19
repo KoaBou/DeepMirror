@@ -66,7 +66,7 @@
 /* Individual Image Box */
 .demo-panel-item {
     width: 550px; /* Fixed width instead of percentage */
-    height: 330px; /* Set fixed height */
+    height: 300px; /* Set fixed height */
     background-color: var(--light-color);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 19px;
@@ -83,6 +83,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border: solid var(--primary-color);
     border-radius: 19px;
     display: block;
 }
@@ -268,6 +269,7 @@
     width: 250px;
     padding: 20px;
     text-align: center;
+    align-items: center;
     border-radius: 15px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -280,9 +282,9 @@
 
 /* Profile Image */
 .team-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
     object-fit: cover;
     margin-bottom: 15px;
 }

@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const deepfakeImage = document.getElementById("deepfakeImage");
     const cameraFeed = document.getElementById("cameraFeed");
-    const fpsDisplay = document.getElementById("fpsDisplay"); // Element to display FPS
+    // const fpsDisplay = document.getElementById("fpsDisplay"); // Element to display FPS
     const parametersInfo = document.getElementById("parametersInfo"); // Element to display distance
 
     window.selectedSourceInput = null;
@@ -78,10 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     cameraFeed.style.display = "none"; // Hide webcam only when deepfake is active
     
                     // Update FPS display
-                    fpsDisplay.textContent = `FPS: ${data.fps.toFixed(2)}`;
+                    // fpsDisplay.textContent = `FPS: ${data.fps.toFixed(2)}`;
                     
                     // Update distance value in Parameters Info
-                    parametersInfo.innerHTML = `Distance: ${data.distance.toFixed(4)}`; // Display distance with 4 decimal points
+                    parametersInfo.innerHTML = `
+                    <div style="text-align: left;">
+                        <b>FPS: ${data.fps.toFixed(2)}<br>
+                        <b>Distance: ${data.distance.toFixed(4)}<br>
+                    </div>
+                    `;
                 } else {
                     console.log("No face detected. Keeping the camera feed active.");
     
