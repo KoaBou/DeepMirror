@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (data.results.face_id !== undefined) {
                             parametersInfo.innerHTML = `
                             <div style="text-align: left;">
-                                <b>Fps:</b> ${data.fps}<br>
+                                <b>FPS:</b> ${data.fps}<br>
                                 <b>Label:</b> ${data.results.label}<br>
                                 <b>Confidence:</b> ${(data.results.confidence * 100).toFixed(2)}%<br>
                                 <b>Is Fake:</b> ${data.results.is_fake ? "Yes" : "No"}<br>
