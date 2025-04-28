@@ -1,11 +1,19 @@
-Sure! Here's the full `README.md` written in clear **English** and in proper **Markdown** format for your project **DeepMirror**:
-
 ---
-
 # DeepMirror
 
 **DeepMirror** is an AI-powered platform for deepfake generation and detection.  
 The project integrates modern technologies like Flask, Python, HTML/CSS, and Java to provide a user-friendly web interface for creating and analyzing deepfake content.
+
+...
+
+## 🎥 Project Presentation
+
+For a detailed overview of the project, you can view our official project slides here:
+
+👉 [DeepMirror Project Slides on Canva](https://www.canva.com/design/DAGit1sH4WY/gyjLcKSpg_RWEF0f1rhsAg/edit?utm_content=DAGit1sH4WY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+---
+
 
 ## 🚀 Features
 
